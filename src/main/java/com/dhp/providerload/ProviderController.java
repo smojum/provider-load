@@ -1,8 +1,16 @@
 package com.dhp.providerload;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Iterator;
 
 
 @RestController
@@ -12,13 +20,25 @@ public class ProviderController {
 
     @GetMapping("/find")
     private Iterable<PracticeLocation> getPracticeLocations() {
-        saveData();
         return practiceLocationRepository.findAll();
     }
 
-    private void saveData() {
+    @GetMapping("/delete")
+    private String delete() {
         practiceLocationRepository.deleteAll();
-        PracticeLocation practiceLocation = new PracticeLocation("1277 Deming Way", "", "Madison", "WI", "53717");
-        practiceLocationRepository.save(practiceLocation);
+        return "{\"message\"=\"Deleted Successfully\"}";
+    }
+
+    @GetMapping("/save")
+    private String saveData() throws IOException {
+        Reader reader = Files.newBufferedReader(Paths.get("C:\\Users\\smojum\\Downloads\\Facilities.csv"));
+        CsvToBean<PracticeLocation> csvToBean = new CsvToBeanBuilder<PracticeLocation>(reader)
+                .withType(PracticeLocation.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
+
+        Iterator<PracticeLocation> csvUserIterator = csvToBean.iterator();
+        practiceLocationRepository.saveAll(() -> csvUserIterator);
+        return "{\"message\"=\"Saved Successfully\"}";
     }
 }

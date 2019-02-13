@@ -1,6 +1,8 @@
 package com.dhp.providerload;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Component;
 
-public interface PracticeLocationRepository extends ElasticsearchRepository<PracticeLocation, String> {
+@Component
+interface PracticeLocationRepository extends ElasticsearchRepository<PracticeLocation, String> {
 }

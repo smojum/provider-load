@@ -1,6 +1,7 @@
 package com.dhp.providerload;
 
 
+import com.opencsv.bean.CsvBindByName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 public class PracticeLocation implements Serializable {
     @Id
     private String id;
+    @CsvBindByName(column = "GROUP NAME")
     private String name;
 
     public String getName() {
@@ -21,10 +23,15 @@ public class PracticeLocation implements Serializable {
         this.name = name;
     }
 
+    @CsvBindByName(column = "ADDRESS LINE 1")
     private String addressLine1;
+    @CsvBindByName(column = "ADDRESS LINE 2")
     private String addressLine2;
+
+    @CsvBindByName(column = "CITY1")
     private String city;
     private String state;
+    @CsvBindByName(column = "ZIPCODE")
     private String zipCode;
     public PracticeLocation() {
 
