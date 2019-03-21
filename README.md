@@ -1,11 +1,3 @@
-# provider-load
-## testing
-### thrid heading
+# Spring Data Elasticsearch
 
-* first bullet
-* second bullet
-
-```java
-public static void main() {
-}
-```
+Example project to use delete/insert/find function using spring data elasticsearch and exposing that as rest service
