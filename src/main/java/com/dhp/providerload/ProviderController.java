@@ -2,6 +2,7 @@ package com.dhp.providerload;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 
 
 @RestController
+@Log4j2
 public class ProviderController {
     @Autowired
     private PracticeLocationRepository practiceLocationRepository;
@@ -38,6 +40,7 @@ public class ProviderController {
                 .build();
 
         Iterator<PracticeLocation> csvUserIterator = csvToBean.iterator();
+        log.info(() -> csvUserIterator);
         practiceLocationRepository.saveAll(() -> csvUserIterator);
         return "{\"message\"=\"Saved Successfully\"}";
     }
